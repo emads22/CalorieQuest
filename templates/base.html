@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <title>
+        {% block title %}
+            Calories Calculator
+        {% endblock %}
+    </title>
+    
+    {% block head %}
+    
+    {% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('index_view') }}">Home</a></li>
+            <li><a href="{{ url_for('calories_form_view') }}">Calories Form</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}            
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; E>&nbsp;&nbsp;2024
+    </footer>
+</body>
+</html>
+
+
+
