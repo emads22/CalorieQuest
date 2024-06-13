@@ -1,49 +1,42 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ super() }} - Bill Form
+    {{ super() }} - Calories Form
 {% endblock %}
 
-{% block content %}   
+{% block content %}
+    <div class="container">
+        <h2>Calories Form</h2>
 
-    <h2>Calories Form</h2>
+        <p>Fill in the form and click the button to get the results</p>
 
-    <p>Fill in the form and click the button to get the results</p>
+        <form action="{{ url_for('calories_form_view') }}" method="post">
+            {{ caloriesform.hidden_tag() }}  <!-- This includes the CSRF token -->
 
-    <form action="{{ url_for('calories_form_view') }}" method="post">
+            <div>
+                {{ caloriesform.weight.label }} {{ caloriesform.weight(size=20) }}
+            </div>
+            <div>
+                {{ caloriesform.height.label }} {{ caloriesform.height(size=20) }}
+            </div>
+            <div>
+                {{ caloriesform.age.label }} {{ caloriesform.age(size=20) }}
+            </div>
+            <div>
+                {{ caloriesform.country.label }} {{ caloriesform.country(size=20) }}
+            </div>
+            <div>
+                {{ caloriesform.city.label }} {{ caloriesform.city(size=20) }}
+            </div>
+            <div>
+                {{ caloriesform.submit() }}
+            </div>
+        </form>
 
-        {{ caloriesform.hidden_tag() }}  <!-- This includes the CSRF token -->
-
-        <div>
-            {{ caloriesform.weight.label }} {{ caloriesform.weight(size=20) }}
-        </div>
-        <div>
-            {{ caloriesform.height.label }} {{ caloriesform.height(size=20) }}
-        </div>
-        <br><hr><br>        
-        <div>
-            {{ caloriesform.age.label }} {{ caloriesform.age(size=20) }}
-        </div>
-        <div>
-            {{ caloriesform.country.label }} {{ caloriesform.country(size=20) }}
-        </div>
-        <br><hr><br>
-        <div>
-            {{ caloriesform.city.label }} {{ caloriesform.city(size=20) }}
-        </div>
-        <br>
-        <div>
-            {{ caloriesform.submit() }}
-        </div>
-
-    </form>
-
-    {% if optimal_calorie_intake %} 
-        <br><br><hr><br>
-        <div>
-            <p>You need {{ optimal_calorie_intake }} calories (kcal) today</p>
-        </div>
-    {% endif %}
-
-
+        {% if optimal_calorie_intake %} 
+            <div class="result">
+                <p>You need {{ optimal_calorie_intake }} calories (kcal) today</p>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

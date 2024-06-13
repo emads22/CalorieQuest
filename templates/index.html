@@ -5,13 +5,11 @@
 {% endblock %}
 
 {% block content %}
-
-    <h2 class="title">
-        Calories Calculation
-    </h2>
-    <br>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget ipsum at justo malesuada volutpat quis in nisi. Nunc at hendrerit magna. Suspendisse potenti. Sed pulvinar ipsum at suscipit interdum. Quisque iaculis sapien sed venenatis faucibus. Integer elementum, dui ac cursus tincidunt, neque felis sagittis metus, id posuere ligula massa sed sem. Vestibulum at elit mauris. Suspendisse feugiat lectus nisl, in maximus leo luctus quis.</p>
-    <br>
-    <a href="{{ url_for('calories_form_view') }}">Calculate Calories</a>
-        
+    <div class="container">
+        <h2 class="title">
+            Calories Calculation
+        </h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget ipsum at justo malesuada volutpat quis in nisi. Nunc at hendrerit magna. Suspendisse potenti. Sed pulvinar ipsum at suscipit interdum. Quisque iaculis sapien sed venenatis faucibus. Integer elementum, dui ac cursus tincidunt, neque felis sagittis metus, id posuere ligula massa sed sem. Vestibulum at elit mauris. Suspendisse feugiat lectus nisl, in maximus leo luctus quis.</p>
+        <a class="calculate-btn" href="{{ url_for('calories_form_view') }}">Calculate Calories</a>
+    </div>
 {% endblock %}

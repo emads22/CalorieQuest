@@ -1,0 +1,64 @@
+/* main.css */
+
+/* Body styling */
+body {
+    background-color: #222; /* Dark grey color */
+    color: #fff; /* White text */
+    font-family: Arial, sans-serif; /* Use a common sans-serif font */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+/* Header styling */
+header {
+    background-color: #333; /* Darker grey color for header */
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Main content container */
+.container {
+    max-width: 800px; /* Limit content width */
+    margin: 20px auto; /* Center content horizontally */
+    padding: 20px;
+}
+
+/* Form styling */
+form {
+    background-color: #444; /* Darker grey for form background */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #555; /* Darker grey for input fields */
+    color: #fff; /* White text */
+}
+
+input[type="submit"] {
+    background-color: #007bff; /* Blue submit button */
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Result styling */
+.result {
+    margin-top: 20px;
+}
+
+.result p {
+    font-size: 18px;
+}
