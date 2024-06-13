@@ -45,10 +45,10 @@ class Calorie:
             float: The calculated optimal calorie intake.
         """
         # Calculate the calorie requirement using the given formula
-        calorie_intake = 10 * self.weight + 6.5 * self.height + 5 - self.temperature * 10
+        calorie_intake = 10 * self.weight + 6.5 * \
+            self.height + 5 - self.temperature * 10
 
         return calorie_intake
-
 
 
 class Temperature:
@@ -103,9 +103,9 @@ class Temperature:
             # Extract data from the webpage using the predefined YAML extractor
             extractor = Extractor.from_yaml_file(YAML_FILE)
             data = extractor.extract(response.text)
-           
+
             # Check if the temperature element is present (walrus operator)
-            if temp := data.get('temperature') is None:
+            if (temp := data.get('temperature')) is None:
                 raise ElementException
 
             # Extract the temperature value from the extracted data and convert it to float
@@ -129,7 +129,7 @@ class Temperature:
 
 
 if __name__ == "__main__":
-    
+
     temp, error = Temperature("lebanon", "beirut").get()
 
     if temp is None:
@@ -142,4 +142,4 @@ if __name__ == "__main__":
                                          temperature=temp).calculate()
 
         print(f"\n\n>> Temperature is: {temp} °C.")
-        print(f"\n>> Optimal Calories Intake is: {optimal_calorie_intake}.")
+        print(f"\n>> Optimal Calorie Intake is: {optimal_calorie_intake} cal.\n\n")
