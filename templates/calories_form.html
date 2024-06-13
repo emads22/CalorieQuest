@@ -25,11 +25,11 @@
             {{ caloriesform.age.label }} {{ caloriesform.age(size=20) }}
         </div>
         <div>
-            {{ caloriesform.city.label }} {{ caloriesform.city(size=20) }}
+            {{ caloriesform.country.label }} {{ caloriesform.country(size=20) }}
         </div>
         <br><hr><br>
         <div>
-            {{ caloriesform.country.label }} {{ caloriesform.country(size=20) }}
+            {{ caloriesform.city.label }} {{ caloriesform.city(size=20) }}
         </div>
         <br>
         <div>
@@ -37,6 +37,13 @@
         </div>
 
     </form>
+
+    {% if optimal_calorie_intake %} 
+        <br><br><hr><br>
+        <div>
+            <p>You need {{ optimal_calorie_intake }} calories (kcal) today</p>
+        </div>
+    {% endif %}
 
 
 {% endblock %}
