@@ -55,13 +55,23 @@ class Temperature:
     """
     Represents a temperature value extracted from the `https://www.timeanddate.com/weather` webpage.
 
+    This class provides functionality to retrieve the current temperature for a specified country and city.
+
     Attributes:
-        base_endpoint (str): The base URL for the weather information.
-        country (str): The country for which to get the temperature, in lowercase.
-        city (str): The city for which to get the temperature, in lowercase.
+        base_endpoint (str): The base URL for the weather information on the Time and Date website.
+        headers (dict): The headers for the HTTP request to mimic a browser request and avoid blocking.
+            It includes 'user-agent' and 'accept-language'.
+        yaml_file (str): The path to the YAML file containing the extraction rules for the webpage content.
+        country (str): The country for which to retrieve the temperature, provided in lowercase.
+        city (str): The city for which to retrieve the temperature, provided in lowercase.
         url (str): The constructed URL for the weather information for the specified country and city.
     """
     base_endpoint = "https://www.timeanddate.com/weather"
+    headers = {
+        'user-agent': random.choice(USER_AGENT_LIST),
+        'accept-language': ACCEPT_LANGUAGE
+    }
+    yaml_file = YAML_FILE
 
     def __init__(self, country: str, city: str) -> None:
         """
@@ -71,9 +81,32 @@ class Temperature:
             country (str): The country for which to get the temperature.
             city (str): The city for which to get the temperature.
         """
-        self.country = country.lower()
-        self.city = city.lower()
-        self.url = f"{self.base_endpoint}/{self.country}/{self.city}"
+        self.country = country.replace(" ", "-").lower()
+        self.city = city.replace(" ", "-").lower()
+        self.url = self._build_url()
+
+    def _build_url(self) -> str:
+        """
+        Builds the URL for fetching weather information.
+
+        Returns:
+            str: The constructed URL.
+        """
+        url = f"{self.base_endpoint}/{self.country}/{self.city}"
+        return url
+
+    def _scrape(self) -> str:
+        # Make the HTTP GET request to fetch the webpage content
+        response = requests.get(url=self._build_url(), headers=self.headers)
+
+        # Raise an exception if the request was unsuccessful
+        response.raise_for_status()
+
+        # Extract data from the webpage using the predefined YAML extractor
+        extractor = Extractor.from_yaml_file(self.yaml_file)
+        raw_data = extractor.extract(response.text)
+
+        return raw_data
 
     def get(self) -> (float, str):
         """
@@ -88,21 +121,9 @@ class Temperature:
             Exception: If an error occurs during the HTTP request or data extraction.
         """
         try:
-            # Define headers for the HTTP request to mimic a browser request and avoid blocking
-            headers = {
-                'user-agent': random.choice(USER_AGENT_LIST),
-                'accept-language': ACCEPT_LANGUAGE
-            }
 
-            # Make the HTTP GET request to fetch the webpage content
-            response = requests.get(self.url, headers=headers)
-
-            # Raise an exception if the request was unsuccessful
-            response.raise_for_status()
-
-            # Extract data from the webpage using the predefined YAML extractor
-            extractor = Extractor.from_yaml_file(YAML_FILE)
-            data = extractor.extract(response.text)
+            # Scrape temperature raw data
+            data = self._scrape()
 
             # Check if the temperature element is present (walrus operator)
             if (temp := data.get('temperature')) is None:
@@ -142,4 +163,5 @@ if __name__ == "__main__":
                                          temperature=temp).calculate()
 
         print(f"\n\n>> Temperature is: {temp} °C.")
-        print(f"\n>> Optimal Calorie Intake is: {optimal_calorie_intake} cal.\n\n")
+        print(f"\n>> Optimal Calorie Intake is: {
+              optimal_calorie_intake} cal.\n\n")
