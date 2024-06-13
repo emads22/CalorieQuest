@@ -1,0 +1,4 @@
+temperature:
+    css: div.h2
+    xpath: '//div[contains(concat(" ",normalize-space(@class)," ")," h2 ")]'
+    type: Text
