@@ -9,15 +9,46 @@ class ElementException(Exception):
 
 
 class Calorie:
+    """
+    Represents the optimal calorie amount a person needs to take today.
 
-    def __init__(self, weight, height, age, temperature) -> None:
+    Attributes:
+        weight (float): The person's weight in kilograms.
+        height (float): The person's height in centimeters.
+        age (int): The person's age in years.
+        temperature (float): The current temperature in degrees Celsius.
+    """
+
+    def __init__(self, weight: float, height: float, age: int, temperature: float) -> None:
+        """
+        Initializes the Calorie object with the specified weight, height, age, and temperature.
+
+        Args:
+            weight (float): The person's weight in kilograms.
+            height (float): The person's height in centimeters.
+            age (int): The person's age in years.
+            temperature (float): The current temperature in degrees Celsius.
+        """
         self.weight = weight
         self.height = height
         self.age = age
         self.temperature = temperature
 
-    def calculate(self):
-        pass
+    def calculate(self) -> float:
+        """
+        Calculates the optimal calorie intake for the day based on the given attributes.
+
+        The formula used is a simplified version of the Harris-Benedict equation adjusted for temperature:
+        calorie_intake = 10 * weight + 6.5 * height + 5 - temperature * 10
+
+        Returns:
+            float: The calculated optimal calorie intake.
+        """
+        # Calculate the calorie requirement using the given formula
+        calorie_intake = 10 * self.weight + 6.5 * self.height + 5 - self.temperature * 10
+
+        return calorie_intake
+
 
 
 class Temperature:
@@ -103,5 +134,12 @@ if __name__ == "__main__":
 
     if temp is None:
         print(f"\n\n--- {error} ---\n\n")
+
     else:
-        print(f"\n\n--- Temperature is: {temp} °C ---\n\n")
+        optimal_calorie_intake = Calorie(weight=65.5,
+                                         height=170,
+                                         age=33,
+                                         temperature=temp).calculate()
+
+        print(f"\n\n>> Temperature is: {temp} °C.")
+        print(f"\n>> Optimal Calories Intake is: {optimal_calorie_intake}.")
