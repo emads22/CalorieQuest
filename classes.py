@@ -9,45 +9,83 @@ class ElementException(Exception):
 
 
 class Calorie:
-    """
-    Represents the optimal calorie amount a person needs to take today.
-
-    Attributes:
-        weight (float): The person's weight in kilograms.
-        height (float): The person's height in centimeters.
-        age (int): The person's age in years.
-        temperature (float): The current temperature in degrees Celsius.
-    """
-
-    def __init__(self, weight: float, height: float, age: int, temperature: float) -> None:
+    def __init__(self, gender, weight_kg, height_cm, age_years, temperature_celsius):
         """
-        Initializes the Calorie object with the specified weight, height, age, and temperature.
+        Initialize the Calorie object with the given parameters.
 
-        Args:
-            weight (float): The person's weight in kilograms.
-            height (float): The person's height in centimeters.
-            age (int): The person's age in years.
-            temperature (float): The current temperature in degrees Celsius.
+        Parameters:
+            gender (str): Gender of the individual ('male' or 'female').
+            weight_kg (float): Weight of the individual in kilograms.
+            height_cm (float): Height of the individual in centimeters.
+            age_years (int): Age of the individual in years.
+            temperature_celsius (float): Temperature in Celsius of the individual's environment.
         """
-        self.weight = weight
-        self.height = height
-        self.age = age
-        self.temperature = temperature
+        # Convert gender to lowercase for consistency
+        self.gender = gender.lower()
+        self.weight_kg = weight_kg
+        self.height_cm = height_cm
+        self.age_years = age_years
+        self.temperature_celsius = temperature_celsius
 
-    def calculate(self) -> float:
+    def bmr(self):
         """
-        Calculates the optimal calorie intake for the day based on the given attributes.
-
-        The formula used is a simplified version of the Harris-Benedict equation adjusted for temperature:
-        calorie_intake = 10 * weight + 6.5 * height + 5 - temperature * 10
+        Calculate the Basal Metabolic Rate (BMR) based on gender using the Harris-Benedict equations.
 
         Returns:
-            float: The calculated optimal calorie intake.
+            float: The calculated BMR.
         """
-        # Calculate the calorie requirement using the given formula
-        calorie_intake = 10 * self.weight + 6.5 * \
-            self.height + 5 - self.temperature * 10
+        if self.gender == 'male':
+            # Harris-Benedict equation for males
+            bmr = 88.362 + (13.397 * self.weight_kg) + \
+                (4.799 * self.height_cm) - (5.677 * self.age_years)
+        elif self.gender == 'female':
+            # Harris-Benedict equation for females
+            bmr = 447.593 + (9.247 * self.weight_kg) + \
+                (3.098 * self.height_cm) - (4.330 * self.age_years)
+        else:
+            raise ValueError(
+                "Invalid gender. The gender must be specified as 'male' or 'female'.")
 
+        return bmr
+
+    def calculate(self):
+        """
+        Calculate the daily calorie intake based on the Basal Metabolic Rate (BMR) and temperature factor.
+
+        The daily calorie intake is estimated using the Harris-Benedict equation:
+
+        - For males:
+            BMR = 88.362 + (13.397 * weight_kg) + (4.799 * height_cm) - (5.677 * age_years)
+        - For females:
+            BMR = 447.593 + (9.247 * weight_kg) + (3.098 * height_cm) - (4.330 * age_years)
+
+        The resulting BMR is adjusted based on the environmental temperature:
+        - If temperature <= 10°C: Calorie intake is decreased by 20%.
+        - If 10°C < temperature <= 25°C: Calorie intake remains unchanged.
+        - If temperature > 25°C: Calorie intake is increased by 20%.
+
+        If temperature is not provided, calorie intake is assumed to be under moderate conditions.
+
+        Returns:
+            float: The estimated daily calorie intake.
+        """
+        bmr = self.bmr()
+
+        # Check if temperature is provided
+        if self.temperature_celsius is None:
+            # If temperature is not provided, assume moderate conditions
+            temperature_factor = 1.0
+        else:
+            # Determine temperature factor based on the environmental temperature
+            if self.temperature_celsius <= 10:
+                temperature_factor = 0.8  # Cold
+            elif self.temperature_celsius <= 25:
+                temperature_factor = 1.0  # Moderate
+            else:
+                temperature_factor = 1.2  # Hot
+
+        # Calculate calorie intake based on BMR and temperature factor
+        calorie_intake = bmr * temperature_factor
         return calorie_intake
 
 
@@ -157,11 +195,11 @@ if __name__ == "__main__":
         print(f"\n\n--- {error} ---\n\n")
 
     else:
-        optimal_calorie_intake = Calorie(weight=65.5,
-                                         height=170,
-                                         age=33,
-                                         temperature=temp).calculate()
+        daily_calorie_intake = Calorie(gender='female',
+                                       weight_kg=70,
+                                       height_cm=165,
+                                       age_years=30,
+                                       temperature_celsius=20).calculate()
 
-        print(f"\n\n>> Temperature is: {temp} °C.")
-        print(f"\n>> Optimal Calorie Intake is: {
-              optimal_calorie_intake} cal.\n\n")
+    print(f"\n\n>> Temperature: {temp} °C.")
+    print(f"\n>> Daily Calorie Intake: {daily_calorie_intake:.2f} kcal.")

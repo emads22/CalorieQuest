@@ -16,7 +16,7 @@ class CaloriesFormView(MethodView):
 
     def post(self):
         calories_form = CaloriesForm(request.form)
-        
+
         if not calories_form.validate_on_submit():
             for field, errors in calories_form.errors.items():
                 for error in errors:
@@ -28,32 +28,34 @@ class CaloriesFormView(MethodView):
                     flash(f"Error in '{field_label}': {error}", 'danger')
             # returns a 400 status code (Bad Request) to indicate that the client's request was incorrect and could not be processed.
             return render_template('calories_form.html', caloriesform=calories_form), 400
-        
 
         try:
             # Extract data from the form
+            gender = calories_form.gender.data.strip()
             weight = float(calories_form.weight.data)
             height = float(calories_form.height.data)
             age = int(calories_form.age.data)
 
-            country = calories_form.country.data.strip().lower()
-            city = calories_form.city.data.strip().lower()
-            
-            
+            country = calories_form.country.data.strip()
+            city = calories_form.city.data.strip()
+
             temperature, error = Temperature(country, city).get()
             if temperature is None:
                 flash(error, 'danger')
 
-            calorie_intake = Calorie(weight=weight,
-                                     height=height,
-                                     age=age,
-                                     temperature=temperature).calculate()
+            calorie_intake = Calorie(gender=gender,
+                                     weight_kg=weight,
+                                     height_cm=height,
+                                     age_years=age,
+                                     temperature_celsius=temperature).calculate()
+            
+            calorie_intake = round(calorie_intake, 2)
 
             # Render the result of the calculated calories intake of today in the same template, returns a 200 status code (OK) to indicate that the request was successful and the resource (in this case, the redirected page) is being returned.
             return render_template(
                 'calories_form.html',
                 caloriesform=CaloriesForm(),
-                optimal_calorie_intake=calorie_intake), 200
+                daily_calorie_intake=calorie_intake), 200
 
         except Exception as e:
             flash(f"An error occurred while processing the form: {e}")

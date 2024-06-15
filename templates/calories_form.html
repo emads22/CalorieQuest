@@ -14,6 +14,9 @@
             {{ caloriesform.hidden_tag() }}  <!-- This includes the CSRF token -->
 
             <div>
+                {{ caloriesform.gender.label }} {{ caloriesform.gender(size=20) }}
+            </div>
+            <div>
                 {{ caloriesform.weight.label }} {{ caloriesform.weight(size=20) }}
             </div>
             <div>
@@ -33,9 +36,9 @@
             </div>
         </form>
 
-        {% if optimal_calorie_intake %} 
+        {% if daily_calorie_intake %} 
             <div class="result">
-                <p>You need {{ optimal_calorie_intake }} calories (kcal) today</p>
+                <p>You need {{ daily_calorie_intake }} calories (kcal) today</p>
             </div>
         {% endif %}
     </div>
