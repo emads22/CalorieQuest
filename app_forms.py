@@ -37,7 +37,7 @@ class CalorieForm(FlaskForm):
                        choices=[('', 'Select city')],
                        validators=[DataRequired(message="City is required.")])
 
-    submit = SubmitField("Calculate", render_kw={"class": "calculate-btn"})
+    submit = SubmitField("Calculate")
 
     def __init__(self, *args, **kwargs):
         """

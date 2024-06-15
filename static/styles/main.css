@@ -6,6 +6,13 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body stretches to at least the height of the viewport */
+}
+
+.main-content {
+    flex: 1; /* Make the main content area flexible to expand and fill remaining space */
 }
 
 /* Header styling */
@@ -72,16 +79,24 @@ input[type="submit"] {
     border-radius: 5px;
     background-color: #fff; /* White background for input fields */
     color: #333; /* Dark grey text */
+    box-sizing: border-box; /* Ensure padding and border are included in the element's total width */
 }
 
-input[type="submit"] {
-    background-color: #ff7f0e; /* Orange submit button */
-    color: #fff;
-    border: none;
+input[type="submit"], .calculate-btn {
     cursor: pointer;
+    display: inline-block;
+    background-color: #ff7f0e; /* Orange background */
+    color: #fff; /* White text */
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 10px;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, .calculate-btn:hover {
     background-color: #e65c00; /* Darker orange on hover */
 }
 
@@ -111,7 +126,7 @@ input[type="submit"]:hover {
 
 .result p {
     font-size: 20px; /* Maintain consistent font size */
-    color: #333; /* Darker text color for better contrast */
+    color: #006d75; /* Darker text color for better contrast */
     font-weight: bold;
 }
 
@@ -122,31 +137,14 @@ footer {
     text-align: center; /* Center align text */
     padding: 10px;
     /* position: absolute; */
-    width: 100%;
-    bottom: 0;
+    /* width: 100%; */
+    /* bottom: 0; */
 }
 
 /* Title styling */
 .title {
     text-align: center;
     color: #006d75; /* Teal text */
-}
-
-/* Button styling */
-.calculate-btn {
-    display: inline-block;
-    background-color: #ff7f0e; /* Orange background */
-    color: #fff; /* White text */
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.calculate-btn:hover {
-    background-color: #e65c00; /* Darker orange on hover */
 }
 
 .external-link {
