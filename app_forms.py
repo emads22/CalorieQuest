@@ -1,95 +1,85 @@
-import re
+import pandas as pd
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, DecimalField, IntegerField, SelectField
-from wtforms.validators import DataRequired, NumberRange, InputRequired, Length, Regexp, ValidationError
-
-
-# class CaloriesForm(FlaskForm):
-
-#     gender = StringField(label="Gender:",
-#                           validators=[DataRequired(message="Gender is required."),
-#                                       Length(
-#                                           min=4, max=6, message="Gender must be between 4 and 6 characters."),
-#                                       Regexp(regex='^(male|female)$',
-#                                              flags=re.IGNORECASE,  # Using re.IGNORECASE flag (2)
-#                                              message="Gender must be 'male' or 'female' only.")],
-#                           render_kw={"placeholder": "e.g., Female"},
-#                           default='Male')
-
-#     weight = DecimalField(label="Weight:",
-#                           validators=[InputRequired(message="Height is required."),
-#                                       NumberRange(min=60, message="Height must be a positive number.")],
-#                           render_kw={"placeholder": "e.g., 170"},
-#                           default=65.5)
-
-#     height = DecimalField(label="Height:",
-#                           validators=[InputRequired(message="Weight is required."),
-#                                       NumberRange(min=50, message="Weight must be a positive number.")],
-#                           render_kw={"placeholder": "e.g., 60"},
-#                           default=170)
-
-#     age = IntegerField(label="Age:",
-#                        validators=[InputRequired(message="Age is required."),
-#                                    NumberRange(min=18, message="Age must be a positive number.")],
-#                        render_kw={"placeholder": "e.g., 30"},
-#                        default=33)
-
-
-#     country = StringField(label="Country:",
-#                           validators=[DataRequired(message="Country is required."),
-#                                       Length(
-#                                           min=3, max=20, message="Country must be between 3 and 20 characters."),
-#                                       Regexp(regex='^ *[a-zA-Z]+ *$',  # 0 or more space char before and after
-#                                              message="Country can only contain letters.")],
-#                           render_kw={"placeholder": "e.g., USA"},
-#                           default='Lebanon')
-
-#     city = StringField(label="City:",
-#                        validators=[DataRequired(message="City is required."),
-#                                    Length(
-#                                        min=3, max=20, message="City must be between 3 and 20 characters."),
-#                                    Regexp(regex='^ *[a-zA-Z]+ *$',  # 0 or more space char before and after
-#                                           message="City can only contain letters.")],
-#                        render_kw={"placeholder": "e.g., Washington"},
-#                        default='Beirut')
-
-#     submit = SubmitField("Calculate")
+from wtforms import SubmitField, DecimalField, IntegerField, SelectField
+from wtforms.validators import DataRequired, NumberRange
+from constants import COUNTRIES_FILE
 
 
 class CaloriesForm(FlaskForm):
 
     gender = SelectField(label="Gender:",
-                         choices=[('male', 'Male'), ('female', 'Female')],
+                         choices=[('', 'Select gender'),
+                                  ('female', 'Female'), ('male', 'Male')],
                          validators=[DataRequired(
-                             message="Gender is required.")],
-                         default='male')
+                             message="Gender is required.")])
 
     weight = DecimalField(label="Weight (kg):",
                           validators=[DataRequired(message="Weight is required."),
                                       NumberRange(min=0, message="Weight must be a positive number.")],
-                          default=70.0)
+                          render_kw={"placeholder": "Enter weight in kilograms"})
 
     height = DecimalField(label="Height (cm):",
                           validators=[DataRequired(message="Height is required."),
                                       NumberRange(min=0, message="Height must be a positive number.")],
-                          default=170.0)
+                          render_kw={"placeholder": "Enter height in centimeters"})
 
     age = IntegerField(label="Age:",
                        validators=[DataRequired(message="Age is required."),
                                    NumberRange(min=0, message="Age must be a positive number.")],
-                       default=25)
+                       render_kw={"placeholder": "Enter your age"})
 
     country = SelectField(label="Country:",
-                          choices=[('USA', 'USA'), ('Canada', 'Canada'),
-                                   ('UK', 'UK'), ('Australia', 'Australia')],
+                          choices=[('', 'Select country')],
                           validators=[DataRequired(
-                              message="Country is required.")],
-                          default='USA')
+                              message="Country is required.")])
 
     city = SelectField(label="City:",
-                       choices=[('New York', 'New York'), ('Los Angeles', 'Los Angeles'),
-                                ('London', 'London'), ('Sydney', 'Sydney')],
-                       validators=[DataRequired(message="City is required.")],
-                       default='New York')
+                       choices=[('', 'Select city')],
+                       validators=[DataRequired(message="City is required.")])
 
     submit = SubmitField("Calculate", render_kw={"class": "calculate-btn"})
+
+    def __init__(self, *args, **kwargs):
+        """
+        Initialize the CaloriesForm.
+
+        This constructor reads the countries data from a CSV file,
+        sorts the DataFrame by 'Country', and sets the choices for
+        the 'country' and 'city' fields.
+
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
+        super().__init__(*args, **kwargs)
+        # Read the countries data from a CSV file
+        self.df = pd.read_csv(COUNTRIES_FILE)
+        # Set the choices for the 'country' field
+        self.country.choices += self.get_countries()
+        # Set the choices for the 'city' field
+        self.city.choices += self.get_cities()
+
+    def get_countries(self):
+        """
+        Get the list of countries.
+
+        Returns:
+            list: A list of tuples containing country names.
+        """
+        # Sort the DataFrame by 'Country'
+        self.df = self.df.sort_values(by=['Country'])
+        countries = [(row['Country'], row['Country'])
+                     for _, row in self.df.iterrows()]
+        return countries
+
+    def get_cities(self):
+        """
+        Get the list of cities.
+
+        Returns:
+            list: A list of tuples containing city names.
+        """
+        # Sort the DataFrame by 'City'
+        self.df = self.df.sort_values(by=['City'])
+        cities = [(row['City'], row['City']) for _, row in self.df.iterrows()]
+        return cities

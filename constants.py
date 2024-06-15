@@ -4,6 +4,7 @@ from pathlib import Path
 ASSETS = Path(__file__).parent / "assets"
 LOG_FILE = ASSETS / "log" / "app.log"
 YAML_FILE = ASSETS / "resources" / "temp_selector.yml"
+COUNTRIES_FILE = ASSETS / "resources" / "countries_and_cities.csv"
 
 USER_AGENT_LIST = [
     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',

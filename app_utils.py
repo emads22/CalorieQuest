@@ -5,88 +5,22 @@ from constants import *
 
 
 class ElementException(Exception):
-    pass
+    """
+    Exception raised when an expected HTML element is not found during web scraping.
 
+    This exception is raised when a specific HTML element that is expected to be present in the web page
+    during scraping is not found. It indicates that the structure of the web page has changed or the element
+    is missing, leading to a failure in data extraction.
+    """
 
-class Calorie:
-    def __init__(self, gender, weight_kg, height_cm, age_years, temperature_celsius):
+    def __init__(self, message="HTML element not found"):
         """
-        Initialize the Calorie object with the given parameters.
+        Initialize the ElementException.
 
-        Parameters:
-            gender (str): Gender of the individual ('male' or 'female').
-            weight_kg (float): Weight of the individual in kilograms.
-            height_cm (float): Height of the individual in centimeters.
-            age_years (int): Age of the individual in years.
-            temperature_celsius (float): Temperature in Celsius of the individual's environment.
+        Args:
+            message (str, optional): Explanation of the error. Defaults to "HTML element not found".
         """
-        # Convert gender to lowercase for consistency
-        self.gender = gender.lower()
-        self.weight_kg = weight_kg
-        self.height_cm = height_cm
-        self.age_years = age_years
-        self.temperature_celsius = temperature_celsius
-
-    def bmr(self):
-        """
-        Calculate the Basal Metabolic Rate (BMR) based on gender using the Harris-Benedict equations.
-
-        Returns:
-            float: The calculated BMR.
-        """
-        if self.gender == 'male':
-            # Harris-Benedict equation for males
-            bmr = 88.362 + (13.397 * self.weight_kg) + \
-                (4.799 * self.height_cm) - (5.677 * self.age_years)
-        elif self.gender == 'female':
-            # Harris-Benedict equation for females
-            bmr = 447.593 + (9.247 * self.weight_kg) + \
-                (3.098 * self.height_cm) - (4.330 * self.age_years)
-        else:
-            raise ValueError(
-                "Invalid gender. The gender must be specified as 'male' or 'female'.")
-
-        return bmr
-
-    def calculate(self):
-        """
-        Calculate the daily calorie intake based on the Basal Metabolic Rate (BMR) and temperature factor.
-
-        The daily calorie intake is estimated using the Harris-Benedict equation:
-
-        - For males:
-            BMR = 88.362 + (13.397 * weight_kg) + (4.799 * height_cm) - (5.677 * age_years)
-        - For females:
-            BMR = 447.593 + (9.247 * weight_kg) + (3.098 * height_cm) - (4.330 * age_years)
-
-        The resulting BMR is adjusted based on the environmental temperature:
-        - If temperature <= 10°C: Calorie intake is decreased by 20%.
-        - If 10°C < temperature <= 25°C: Calorie intake remains unchanged.
-        - If temperature > 25°C: Calorie intake is increased by 20%.
-
-        If temperature is not provided, calorie intake is assumed to be under moderate conditions.
-
-        Returns:
-            float: The estimated daily calorie intake.
-        """
-        bmr = self.bmr()
-
-        # Check if temperature is provided
-        if self.temperature_celsius is None:
-            # If temperature is not provided, assume moderate conditions
-            temperature_factor = 1.0
-        else:
-            # Determine temperature factor based on the environmental temperature
-            if self.temperature_celsius <= 10:
-                temperature_factor = 0.8  # Cold
-            elif self.temperature_celsius <= 25:
-                temperature_factor = 1.0  # Moderate
-            else:
-                temperature_factor = 1.2  # Hot
-
-        # Calculate calorie intake based on BMR and temperature factor
-        calorie_intake = bmr * temperature_factor
-        return calorie_intake
+        super().__init__(message)
 
 
 class Temperature:
@@ -187,6 +121,87 @@ class Temperature:
         return None, error_message
 
 
+class Calorie:
+    def __init__(self, gender, weight_kg, height_cm, age_years, temperature_celsius):
+        """
+        Initialize the Calorie object with the given parameters.
+
+        Parameters:
+            gender (str): Gender of the individual ('male' or 'female').
+            weight_kg (float): Weight of the individual in kilograms.
+            height_cm (float): Height of the individual in centimeters.
+            age_years (int): Age of the individual in years.
+            temperature_celsius (float): Temperature in Celsius of the individual's environment.
+        """
+        # Convert gender to lowercase for consistency
+        self.gender = gender.lower()
+        self.weight_kg = weight_kg
+        self.height_cm = height_cm
+        self.age_years = age_years
+        self.temperature_celsius = temperature_celsius
+
+    def bmr(self):
+        """
+        Calculate the Basal Metabolic Rate (BMR) based on gender using the Harris-Benedict equations.
+
+        Returns:
+            float: The calculated BMR.
+        """
+        if self.gender == 'male':
+            # Harris-Benedict equation for males
+            bmr = 88.362 + (13.397 * self.weight_kg) + \
+                (4.799 * self.height_cm) - (5.677 * self.age_years)
+        elif self.gender == 'female':
+            # Harris-Benedict equation for females
+            bmr = 447.593 + (9.247 * self.weight_kg) + \
+                (3.098 * self.height_cm) - (4.330 * self.age_years)
+        else:
+            raise ValueError(
+                "Invalid gender. The gender must be specified as 'male' or 'female'.")
+
+        return bmr
+
+    def calculate(self):
+        """
+        Calculate the daily calorie intake based on the Basal Metabolic Rate (BMR) and temperature factor.
+
+        The daily calorie intake is estimated using the Harris-Benedict equation:
+
+        - For males:
+            BMR = 88.362 + (13.397 * weight_kg) + (4.799 * height_cm) - (5.677 * age_years)
+        - For females:
+            BMR = 447.593 + (9.247 * weight_kg) + (3.098 * height_cm) - (4.330 * age_years)
+
+        The resulting BMR is adjusted based on the environmental temperature:
+        - If temperature <= 10°C: Calorie intake is decreased by 20%.
+        - If 10°C < temperature <= 25°C: Calorie intake remains unchanged.
+        - If temperature > 25°C: Calorie intake is increased by 20%.
+
+        If temperature is not provided, calorie intake is assumed to be under moderate conditions.
+
+        Returns:
+            float: The estimated daily calorie intake.
+        """
+        bmr = self.bmr()
+
+        # Check if temperature is provided
+        if self.temperature_celsius is None:
+            # If temperature is not provided, assume moderate conditions
+            temperature_factor = 1.0
+        else:
+            # Determine temperature factor based on the environmental temperature
+            if self.temperature_celsius <= 10:
+                temperature_factor = 0.8  # Cold
+            elif self.temperature_celsius <= 25:
+                temperature_factor = 1.0  # Moderate
+            else:
+                temperature_factor = 1.2  # Hot
+
+        # Calculate calorie intake based on BMR and temperature factor
+        calorie_intake = bmr * temperature_factor
+        return calorie_intake
+
+
 if __name__ == "__main__":
 
     temp, error = Temperature("lebanon", "beirut").get()
@@ -202,4 +217,4 @@ if __name__ == "__main__":
                                        temperature_celsius=20).calculate()
 
     print(f"\n\n>> Temperature: {temp} °C.")
-    print(f"\n>> Daily Calorie Intake: {daily_calorie_intake:.2f} kcal.")
+    print(f"\n>> Daily Calorie Intake: {daily_calorie_intake:.2f} kcal.\n\n")

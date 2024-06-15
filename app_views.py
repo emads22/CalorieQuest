@@ -2,7 +2,7 @@ import logging
 from flask import render_template, redirect, url_for, request, flash
 from flask.views import MethodView
 from app_forms import CaloriesForm
-from classes import Temperature, Calorie
+from app_utils import Temperature, Calorie
 
 
 class IndexView(MethodView):
@@ -58,11 +58,12 @@ class CaloriesFormView(MethodView):
             calorie_intake = round(calorie_intake, 2)
 
             # Render the result of the calculated calories intake in the same template
-            # along with a new instance of the form to clear any previous data,
+            # along with the populated form (we can also send CalorieForm() which is
+            # a new instance of the form to clear any previous data),
             # and return a 200 status code (OK) to indicate that the request was successful.
             return render_template(
                 'calories_form.html',
-                caloriesform=CaloriesForm(),
+                caloriesform=calories_form,
                 daily_calorie_intake=calorie_intake), 200
 
         except Exception as e:
