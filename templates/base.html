@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
     <title>
         {% block title %}
-            Calories Calculator
+            CalorieQuest
         {% endblock %}
     </title>
     {% block head %}
@@ -19,7 +19,7 @@
         <nav>
             <ul>
                 <li><a href="{{ url_for('index_view') }}">Home</a></li>
-                <li><a href="{{ url_for('calories_form_view') }}">Calorie Calculator</a></li>
+                <li><a href="{{ url_for('calorie_form_view') }}">Calorie Calculator</a></li>
             </ul>
         </nav>
     </header>

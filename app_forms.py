@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired, NumberRange
 from constants import COUNTRIES_FILE
 
 
-class CaloriesForm(FlaskForm):
+class CalorieForm(FlaskForm):
 
     gender = SelectField(label="Gender:",
                          choices=[('', 'Select gender'),
@@ -41,7 +41,7 @@ class CaloriesForm(FlaskForm):
 
     def __init__(self, *args, **kwargs):
         """
-        Initialize the CaloriesForm.
+        Initialize the CalorieForm.
 
         This constructor reads the countries data from a CSV file,
         sorts the DataFrame by 'Country', and sets the choices for
@@ -53,7 +53,11 @@ class CaloriesForm(FlaskForm):
         """
         super().__init__(*args, **kwargs)
         # Read the countries data from a CSV file
-        self.df = pd.read_csv(COUNTRIES_FILE)
+        df = pd.read_csv(COUNTRIES_FILE)
+        # Sort the DataFrame by 'Country'
+        self.countries_df = df.sort_values(by='Country')
+        # Sort the DataFrame by 'City'
+        self.cities_df = df.sort_values(by=['City'])
         # Set the choices for the 'country' field
         self.country.choices += self.get_countries()
         # Set the choices for the 'city' field
@@ -66,10 +70,8 @@ class CaloriesForm(FlaskForm):
         Returns:
             list: A list of tuples containing country names.
         """
-        # Sort the DataFrame by 'Country'
-        self.df = self.df.sort_values(by=['Country'])
         countries = [(row['Country'], row['Country'])
-                     for _, row in self.df.iterrows()]
+                     for _, row in self.countries_df.iterrows()]
         return countries
 
     def get_cities(self):
@@ -79,7 +81,6 @@ class CaloriesForm(FlaskForm):
         Returns:
             list: A list of tuples containing city names.
         """
-        # Sort the DataFrame by 'City'
-        self.df = self.df.sort_values(by=['City'])
-        cities = [(row['City'], row['City']) for _, row in self.df.iterrows()]
+        cities = [(row['City'], row['City'])
+                  for _, row in self.cities_df.iterrows()]
         return cities

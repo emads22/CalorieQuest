@@ -200,21 +200,3 @@ class Calorie:
         # Calculate calorie intake based on BMR and temperature factor
         calorie_intake = bmr * temperature_factor
         return calorie_intake
-
-
-if __name__ == "__main__":
-
-    temp, error = Temperature("lebanon", "beirut").get()
-
-    if temp is None:
-        print(f"\n\n--- {error} ---\n\n")
-
-    else:
-        daily_calorie_intake = Calorie(gender='female',
-                                       weight_kg=70,
-                                       height_cm=165,
-                                       age_years=30,
-                                       temperature_celsius=20).calculate()
-
-    print(f"\n\n>> Temperature: {temp} °C.")
-    print(f"\n>> Daily Calorie Intake: {daily_calorie_intake:.2f} kcal.\n\n")

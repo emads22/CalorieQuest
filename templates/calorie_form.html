@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ super() }} - Calories Form
+    {{ super() }} - Form
 {% endblock %}
 
 {% block content %}
@@ -9,15 +9,15 @@
         <h2 class="title">Begin Your Journey to Health</h2>
         <p>Enter your vital information in the form below to discover your personalized calorie plan.<br>Simply click 'Calculate' to initiate the process. Let us guide you towards your path to optimal well-being.</p>
 
-        <form action="{{ url_for('calories_form_view') }}" method="post">
-            {{ caloriesform.hidden_tag() }}  <!-- This includes the CSRF token -->
+        <form action="{{ url_for('calorie_form_view') }}" method="post">
+            {{ calorieform.hidden_tag() }}  <!-- This includes the CSRF token -->
 
             <!-- Gender Field -->
             <div>
-                {{ caloriesform.gender.label }} {{ caloriesform.gender() }}
-                {% if caloriesform.gender.errors %}
+                {{ calorieform.gender.label }} {{ calorieform.gender() }}
+                {% if calorieform.gender.errors %}
                     <ul class="errors">
-                        {% for error in caloriesform.gender.errors %}
+                        {% for error in calorieform.gender.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                     </ul>
@@ -26,10 +26,10 @@
 
             <!-- Weight Field -->
             <div>
-                {{ caloriesform.weight.label }} {{ caloriesform.weight() }}
-                {% if caloriesform.weight.errors %}
+                {{ calorieform.weight.label }} {{ calorieform.weight() }}
+                {% if calorieform.weight.errors %}
                     <ul class="errors">
-                        {% for error in caloriesform.weight.errors %}
+                        {% for error in calorieform.weight.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                     </ul>
@@ -38,10 +38,10 @@
 
             <!-- Height Field -->
             <div>
-                {{ caloriesform.height.label }} {{ caloriesform.height() }}
-                {% if caloriesform.height.errors %}
+                {{ calorieform.height.label }} {{ calorieform.height() }}
+                {% if calorieform.height.errors %}
                     <ul class="errors">
-                        {% for error in caloriesform.height.errors %}
+                        {% for error in calorieform.height.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                     </ul>
@@ -50,10 +50,10 @@
 
             <!-- Age Field -->
             <div>
-                {{ caloriesform.age.label }} {{ caloriesform.age() }}
-                {% if caloriesform.age.errors %}
+                {{ calorieform.age.label }} {{ calorieform.age() }}
+                {% if calorieform.age.errors %}
                     <ul class="errors">
-                        {% for error in caloriesform.age.errors %}
+                        {% for error in calorieform.age.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                     </ul>
@@ -62,10 +62,10 @@
 
             <!-- Country Field -->
             <div>
-                {{ caloriesform.country.label }} {{ caloriesform.country() }}
-                {% if caloriesform.country.errors %}
+                {{ calorieform.country.label }} {{ calorieform.country() }}
+                {% if calorieform.country.errors %}
                     <ul class="errors">
-                        {% for error in caloriesform.country.errors %}
+                        {% for error in calorieform.country.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                     </ul>
@@ -74,10 +74,10 @@
 
             <!-- City Field -->
             <div>
-                {{ caloriesform.city.label }} {{ caloriesform.city() }}
-                {% if caloriesform.city.errors %}
+                {{ calorieform.city.label }} {{ calorieform.city() }}
+                {% if calorieform.city.errors %}
                     <ul class="errors">
-                        {% for error in caloriesform.city.errors %}
+                        {% for error in calorieform.city.errors %}
                             <li>{{ error }}</li>
                         {% endfor %}
                     </ul>
@@ -86,7 +86,7 @@
 
             <!-- Submit Button -->
             <div>
-                {{ caloriesform.submit() }}
+                {{ calorieform.submit() }}
             </div>
         </form>
 
