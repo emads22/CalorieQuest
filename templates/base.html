@@ -9,19 +9,20 @@
             Calories Calculator
         {% endblock %}
     </title>
-    
     {% block head %}
-    
     {% endblock %}
 </head>
 <body>
     <!-- Navbar -->
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index_view') }}">Home</a></li>
-            <li><a href="{{ url_for('calories_form_view') }}">Calories Form</a></li>
-        </ul>
-    </nav>
+    <header>
+        <h1>CalorieQuest</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index_view') }}">Home</a></li>
+                <li><a href="{{ url_for('calories_form_view') }}">Calorie Calculator</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <!-- Main Content -->
     <div class="main-content">

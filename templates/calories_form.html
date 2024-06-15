@@ -6,31 +6,85 @@
 
 {% block content %}
     <div class="container">
-        <h2>Calories Form</h2>
-
-        <p>Fill in the form and click the button to get the results</p>
+        <h2 class="title">Begin Your Journey to Health</h2>
+        <p>Enter your vital information in the form below to discover your personalized calorie plan.<br>Simply click 'Calculate' to initiate the process. Let us guide you towards your path to optimal well-being.</p>
 
         <form action="{{ url_for('calories_form_view') }}" method="post">
             {{ caloriesform.hidden_tag() }}  <!-- This includes the CSRF token -->
 
+            <!-- Gender Field -->
             <div>
-                {{ caloriesform.gender.label }} {{ caloriesform.gender(size=20) }}
+                {{ caloriesform.gender.label }} {{ caloriesform.gender() }}
+                {% if caloriesform.gender.errors %}
+                    <ul class="errors">
+                        {% for error in caloriesform.gender.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
+
+            <!-- Weight Field -->
             <div>
-                {{ caloriesform.weight.label }} {{ caloriesform.weight(size=20) }}
+                {{ caloriesform.weight.label }} {{ caloriesform.weight() }}
+                {% if caloriesform.weight.errors %}
+                    <ul class="errors">
+                        {% for error in caloriesform.weight.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
+
+            <!-- Height Field -->
             <div>
-                {{ caloriesform.height.label }} {{ caloriesform.height(size=20) }}
+                {{ caloriesform.height.label }} {{ caloriesform.height() }}
+                {% if caloriesform.height.errors %}
+                    <ul class="errors">
+                        {% for error in caloriesform.height.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
+
+            <!-- Age Field -->
             <div>
-                {{ caloriesform.age.label }} {{ caloriesform.age(size=20) }}
+                {{ caloriesform.age.label }} {{ caloriesform.age() }}
+                {% if caloriesform.age.errors %}
+                    <ul class="errors">
+                        {% for error in caloriesform.age.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
+
+            <!-- Country Field -->
             <div>
-                {{ caloriesform.country.label }} {{ caloriesform.country(size=20) }}
+                {{ caloriesform.country.label }} {{ caloriesform.country() }}
+                {% if caloriesform.country.errors %}
+                    <ul class="errors">
+                        {% for error in caloriesform.country.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
+
+            <!-- City Field -->
             <div>
-                {{ caloriesform.city.label }} {{ caloriesform.city(size=20) }}
+                {{ caloriesform.city.label }} {{ caloriesform.city() }}
+                {% if caloriesform.city.errors %}
+                    <ul class="errors">
+                        {% for error in caloriesform.city.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
+
+            <!-- Submit Button -->
             <div>
                 {{ caloriesform.submit() }}
             </div>

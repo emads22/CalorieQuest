@@ -1,3 +1,4 @@
+import logging
 from flask import render_template, redirect, url_for, request, flash
 from flask.views import MethodView
 from app_forms import CaloriesForm
@@ -18,15 +19,10 @@ class CaloriesFormView(MethodView):
         calories_form = CaloriesForm(request.form)
 
         if not calories_form.validate_on_submit():
-            for field, errors in calories_form.errors.items():
-                for error in errors:
-                    field_obj = getattr(calories_form, field, None)
-                    if field_obj is not None and hasattr(field_obj, 'label') and hasattr(field_obj.label, 'text'):
-                        field_label = field_obj.label.text
-                    else:
-                        field_label = field
-                    flash(f"Error in '{field_label}': {error}", 'danger')
-            # returns a 400 status code (Bad Request) to indicate that the client's request was incorrect and could not be processed.
+            # Flash a message to inform the user that there are errors in the form
+            flash('Please ensure all fields are filled correctly.', 'danger')
+            # Render the template with the populated form and return a 400 status code (Bad Request)
+            # to indicate that the client's request was incorrect and could not be processed.
             return render_template('calories_form.html', caloriesform=calories_form), 400
 
         try:
@@ -35,29 +31,43 @@ class CaloriesFormView(MethodView):
             weight = float(calories_form.weight.data)
             height = float(calories_form.height.data)
             age = int(calories_form.age.data)
-
             country = calories_form.country.data.strip()
             city = calories_form.city.data.strip()
 
+            # Retrieve temperature data for the specified country and city
             temperature, error = Temperature(country, city).get()
-            if temperature is None:
-                flash(error, 'danger')
 
+            # If temperature data is not available, log and display an error message
+            if temperature is None:
+                # Log a detailed error message for debugging purposes
+                logging.error(f"Failed to retrieve temperature data: {error}")
+                # Flash a user-friendly error message
+                flash(
+                    "An error occurred while retrieving temperature data. Please try again later.", 'danger')
+                # Return from the function to indicate that the request cannot be processed further
+                return render_template('calories_form.html', caloriesform=calories_form), 400
+
+            # Calculate the daily calorie intake based on the retrieved data
             calorie_intake = Calorie(gender=gender,
                                      weight_kg=weight,
                                      height_cm=height,
                                      age_years=age,
                                      temperature_celsius=temperature).calculate()
-            
+
+            # Round the calculated calorie intake to two decimal places
             calorie_intake = round(calorie_intake, 2)
 
-            # Render the result of the calculated calories intake of today in the same template, returns a 200 status code (OK) to indicate that the request was successful and the resource (in this case, the redirected page) is being returned.
+            # Render the result of the calculated calories intake in the same template
+            # along with a new instance of the form to clear any previous data,
+            # and return a 200 status code (OK) to indicate that the request was successful.
             return render_template(
                 'calories_form.html',
                 caloriesform=CaloriesForm(),
                 daily_calorie_intake=calorie_intake), 200
 
         except Exception as e:
+            # If an unexpected error occurs during form processing, flash an error message
+            # and redirect to the form page. Return a 500 status code (Internal Server Error)
+            # to indicate that an unexpected error occurred on the server.
             flash(f"An error occurred while processing the form: {e}")
-            # Redirect to the form page if there's an error, return a 500 status code (Internal Server Error) to indicate that an unexpected error occurred on the server.
             return redirect(url_for('calories_form_view')), 500

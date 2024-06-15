@@ -1,22 +1,46 @@
-/* main.css */
-
 /* Body styling */
 body {
-    background-color: #222; /* Dark grey color */
-    color: #fff; /* White text */
-    font-family: Arial, sans-serif; /* Use a common sans-serif font */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
+    background-color: #f0f0f5; /* Light grey background for a modern look */
+    color: #333; /* Dark grey text */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern sans-serif font */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
 }
 
 /* Header styling */
 header {
-    background-color: #333; /* Darker grey color for header */
+    background-color: #006d75; /* Teal color for header */
+    color: #fff; /* White text */
     padding: 20px;
+    text-align: center; /* Center align text */
 }
 
 header h1 {
     margin: 0;
+    font-size: 2em;
+}
+
+/* Navbar styling */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center; /* Center align nav items */
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
 }
 
 /* Main content container */
@@ -24,41 +48,115 @@ header h1 {
     max-width: 800px; /* Limit content width */
     margin: 20px auto; /* Center content horizontally */
     padding: 20px;
+    background-color: #fff; /* White background for content */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 /* Form styling */
 form {
-    background-color: #444; /* Darker grey for form background */
+    background-color: #f8f8f8; /* Light grey for form background */
     padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 input[type="text"],
 input[type="number"],
+select,
 input[type="submit"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    border: none;
+    border: 1px solid #ccc; /* Light border */
     border-radius: 5px;
-    background-color: #555; /* Darker grey for input fields */
-    color: #fff; /* White text */
+    background-color: #fff; /* White background for input fields */
+    color: #333; /* Dark grey text */
 }
 
 input[type="submit"] {
-    background-color: #007bff; /* Blue submit button */
+    background-color: #ff7f0e; /* Orange submit button */
+    color: #fff;
+    border: none;
     cursor: pointer;
 }
 
 input[type="submit"]:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #e65c00; /* Darker orange on hover */
+}
+
+/* Flash messages styling */
+.flash {
+    list-style-type: none;
+    padding: 10px;
+    background-color: #ffdddd; /* Light red background for errors */
+    border-left: 5px solid #f44336; /* Red border for errors */
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.flash li {
+    color: #a94442; /* Dark red text for errors */
 }
 
 /* Result styling */
 .result {
     margin-top: 20px;
+    padding: 20px;
+    background-color: #f0f9f0; /* Light green background for results */
+    border-left: 5px solid #00cc66; /* Green border for results */
+    border-radius: 5px;
 }
 
 .result p {
-    font-size: 18px;
+    font-size: 20px; /* Maintain consistent font size */
+    color: #333; /* Darker text color for better contrast */
+    font-weight: bold;
 }
+
+/* Footer styling */
+footer {
+    background-color: #006d75; /* Teal background */
+    color: #fff; /* White text */
+    text-align: center; /* Center align text */
+    padding: 10px;
+    /* position: absolute; */
+    width: 100%;
+    bottom: 0;
+}
+
+/* Title styling */
+.title {
+    text-align: center;
+    color: #006d75; /* Teal text */
+}
+
+/* Button styling */
+.calculate-btn {
+    display: inline-block;
+    background-color: #ff7f0e; /* Orange background */
+    color: #fff; /* White text */
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.calculate-btn:hover {
+    background-color: #e65c00; /* Darker orange on hover */
+}
+
+.external-link {
+    color: #008080; /* Teal color for links */
+    text-decoration: none; 
+    font-weight: bolder;
+    font-style: italic;
+}
+
+.external-link:hover {
+    color: #006666; /* Darker teal on hover */
+    text-decoration: underline; /* Underline links */
+}
+

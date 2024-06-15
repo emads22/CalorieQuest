@@ -2,6 +2,7 @@ from pathlib import Path
 
 
 ASSETS = Path(__file__).parent / "assets"
+LOG_FILE = ASSETS / "log" / "app.log"
 YAML_FILE = ASSETS / "resources" / "temp_selector.yml"
 
 USER_AGENT_LIST = [

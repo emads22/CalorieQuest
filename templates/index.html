@@ -6,10 +6,12 @@
 
 {% block content %}
     <div class="container">
-        <h2 class="title">
-            Calories Calculation
-        </h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eget ipsum at justo malesuada volutpat quis in nisi. Nunc at hendrerit magna. Suspendisse potenti. Sed pulvinar ipsum at suscipit interdum. Quisque iaculis sapien sed venenatis faucibus. Integer elementum, dui ac cursus tincidunt, neque felis sagittis metus, id posuere ligula massa sed sem. Vestibulum at elit mauris. Suspendisse feugiat lectus nisl, in maximus leo luctus quis.</p>
-        <a class="calculate-btn" href="{{ url_for('calories_form_view') }}">Calculate Calories</a>
+        <h1 class="title">Welcome to CalorieQuest platform</h1>
+
+        <p>Start your journey towards a healthier lifestyle with our CalorieQuest platform. We help you understand your daily calorie needs through our innovative approach that incorporates the science of Basal Metabolic Rate (BMR) and factors in external influences like temperature. The BMR calculation, based on the Harris-Benedict equation, takes into account your weight, height, and age, providing you with personalized insights into your daily energy requirements.</p>
+        <p>Additionally, we integrate real-time temperature data sourced from <a href="https://www.timeanddate.com/weather" class="external-link" target="_blank">timeanddate.com/weather</a> webpage, ensuring that your calorie recommendations are adjusted to reflect environmental factors.</p>
+        <p>Take the first step towards managing your calorie intake effectively by calculating your daily calorie intake now!</p>
+
+        <a class="calculate-btn" href="{{ url_for('calories_form_view') }}">Daily Calories Intake</a>
     </div>
 {% endblock %}
