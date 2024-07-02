@@ -9,6 +9,17 @@ CalorieQuest is a Flask application designed to help users calculate their daily
 - **Temperature Adjustment**: Adjust calorie intake based on the environmental temperature for more accurate results.
 - **Accurate Logger**: Utilizes a logger located at `assets/log/app.log` in to record debug and error messages accurately.
 
+## Technologies Used
+- **Flask**: A micro web framework for Python.
+- **Flask-WTF**: Integrates Flask with WTForms, providing form rendering and validation.
+- **lxml**: A library for processing XML and HTML.
+- **pandas**: A data manipulation and analysis library.
+- **python-dotenv**: A library for managing environment variables in .env files.
+- **requests**: A library for making HTTP requests.
+- **selectorlib**: A library for extracting data from web pages.
+- **WTForms**: A flexible forms validation and rendering library for Python web development.
+- **logging**: A module for tracking events that happen when software runs.
+
 ## Setup
 1. Clone the repository.
 2. Ensure Python 3.x is installed.
