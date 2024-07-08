@@ -1,5 +1,7 @@
 # CalorieQuest
 
+![CalorieQuest_logo](./static/assets/images/CalorieQuest_logo.png)
+
 ## Overview
 CalorieQuest is a Flask application designed to help users calculate their daily calorie intake based on their personal information and environmental temperature. It provides users with a form to input their gender, weight, height, age, country, and city. Using this information, the application calculates the daily calorie intake using the Harris-Benedict equation and adjusts it based on the environmental temperature.
 

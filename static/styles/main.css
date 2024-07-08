@@ -19,7 +19,7 @@ body {
 header {
     background-color: #006d75; /* Teal color for header */
     color: #fff; /* White text */
-    padding: 20px;
+    padding: 40px 20px;
     text-align: center; /* Center align text */
 }
 
@@ -159,3 +159,17 @@ footer {
     text-decoration: underline; /* Underline links */
 }
 
+.logo {
+    width: 80px; 
+    height: auto;
+    margin-right: 20px; 
+    display: inline-block; /* Ensure the image is treated as inline-block */
+    vertical-align: middle; /* Align the middle of the logo with the text */
+}
+
+.title-container h1 {
+    margin-top: 0; /* Remove any default margin */
+    line-height: 60px; 
+    display: inline-block; /* Ensure the heading is treated as inline-block */
+    vertical-align: middle; /* Align the middle of the text with the logo */
+}

@@ -15,7 +15,10 @@
 <body>
     <!-- Navbar -->
     <header>
-        <h1>CalorieQuest</h1>
+        <div class="d-flex justify-content-center align-items-center title-container">
+            <img src="{{ url_for('static', filename='assets/images/CalorieQuest_logo.png') }}" alt="CalorieQuest Logo" class="logo">
+            <h1 class="ml-3 mb-0">CalorieQuest</h1>
+        </div>
         <nav>
             <ul>
                 <li><a href="{{ url_for('index_view') }}">Home</a></li>

@@ -1,8 +1,7 @@
 from pathlib import Path
 
-
-ASSETS = Path(__file__).parent / "assets"
-LOG_FILE = ASSETS / "log" / "app.log"
+LOG_FILE = Path(__file__).parent / "log" / "app.log"
+ASSETS = Path(__file__).parent / "static" / "assets"
 YAML_FILE = ASSETS / "resources" / "temp_selector.yml"
 COUNTRIES_FILE = ASSETS / "resources" / "countries_and_cities.csv"
 
